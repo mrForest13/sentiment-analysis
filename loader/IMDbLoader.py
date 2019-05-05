@@ -8,7 +8,7 @@ from loader.Loader import Loader
 class IMDbLoader(Loader):
 
     def __init__(self, data_directory, pos_directory, neg_directory):
-        super().__init__()
+        super().__init__(['negative', 'positive'])
         self.data_directory = data_directory
         self.pos_directory = pos_directory
         self.neg_directory = neg_directory
