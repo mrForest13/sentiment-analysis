@@ -4,14 +4,14 @@ from nltk.corpus import stopwords
 
 class StopWordsProcessor(Processor):
 
-    def __init__(self, next_processor, language='english'):
-        super().__init__(next_processor)
+    def __init__(self, language='english'):
+        super().__init__()
         self.stop_words = stopwords.words(language)
 
     def process(self, data):
-        processed_data = self.remove_stop_words(data)
-        super().process(processed_data)
-        return self.next_processor.process(processed_data)
+        data['text'] = self.remove_stop_words(data)
+
+        return self.next_processor.process(data)
 
     def remove_stop_words(self, data):
         return data['text'].apply(lambda x: " ".join([item for item in x.split() if item not in self.stop_words]))

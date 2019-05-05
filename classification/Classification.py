@@ -1,6 +1,6 @@
 from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
 from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import RepeatedKFold, GridSearchCV
+from sklearn.model_selection import GridSearchCV
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.naive_bayes import MultinomialNB
@@ -16,7 +16,7 @@ classifiers = {
     'Decision Tree': DecisionTreeClassifier(),
     'Random Forest': RandomForestClassifier(),
     'Ada Boost': AdaBoostClassifier(),
-    'SVM': SVC(),
+    # 'SVM': SVC(),
 }
 
 parameters = {
@@ -55,18 +55,29 @@ parameters = {
 
 class Classification(object):
 
-    def __init__(self, n_splits=5, n_repeats=10, n_jobs=4):
-        self.cv = RepeatedKFold(n_splits=n_splits, n_repeats=n_repeats)
-        self.results = {}
-        self.n_jobs = n_jobs
+    def __init__(self, repeats=3, jobs=4):
+        self.fit_results = {}
+        self.predict_results = {}
+        self.repeats = repeats
+        self.jobs = jobs
 
     def fit(self, name, train, train_labels, scoring='accuracy'):
-        clf = GridSearchCV(classifiers[name], parameters[name], cv=self.cv, scoring=scoring, n_jobs=self.n_jobs)
+        clf = GridSearchCV(classifiers[name], parameters[name], cv=self.repeats, scoring=scoring, n_jobs=self.jobs)
         start_time = time.time()
         clf.fit(train, train_labels)
-        self.results[name] = clf
+        self.fit_results[name] = clf
         print("Execution time for fit {}: {}s".format(name, time.time() - start_time))
+        print("Best params: " + str(clf.best_params_))
+        print("Best scores: " + str(clf.best_score_))
+        print()
 
     def fit_all(self, train, train_labels, scoring='accuracy'):
         for name in classifiers.keys():
             self.fit(name, train, train_labels, scoring)
+
+    def predict(self, name, test):
+        self.predict_results[name] = self.fit_results[name].predict(test)
+
+    def predict_all(self, test):
+        for name in classifiers.keys():
+            self.predict(name, test)
