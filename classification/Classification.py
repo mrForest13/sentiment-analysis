@@ -1,10 +1,12 @@
 from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
 from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import RepeatedKFold, GridSearchCV
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.svm import SVC
 
+import time
 import numpy as np
 
 classifiers = {
@@ -53,8 +55,18 @@ parameters = {
 
 class Classification(object):
 
-    def __init__(self, data, n_splits=5, n_repeats=10, n_jobs=4):
-        self.data = data
-        self.n_splits = n_splits
-        self.n_repeats = n_repeats
+    def __init__(self, n_splits=5, n_repeats=10, n_jobs=4):
+        self.cv = RepeatedKFold(n_splits=n_splits, n_repeats=n_repeats)
+        self.results = {}
         self.n_jobs = n_jobs
+
+    def fit(self, name, train, train_labels, scoring='accuracy'):
+        clf = GridSearchCV(classifiers[name], parameters[name], cv=self.cv, scoring=scoring, n_jobs=self.n_jobs)
+        start_time = time.time()
+        clf.fit(train, train_labels)
+        self.results[name] = clf
+        print("Execution time for fit {}: {}s".format(name, time.time() - start_time))
+
+    def fit_all(self, train, train_labels, scoring='accuracy'):
+        for name in classifiers.keys():
+            self.fit(name, train, train_labels, scoring)

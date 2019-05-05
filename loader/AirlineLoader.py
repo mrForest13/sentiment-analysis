@@ -11,5 +11,7 @@ class ArlineLoader(Loader):
 
     def load(self):
         csv_path = self.csv_path
-        col_names = self.col_names
-        self.data = pandas.read_csv(csv_path, header=None, usecols=[1, 10], names=col_names, skiprows=[0])
+
+        self.data = pandas.read_csv(csv_path, header=None, usecols=[1, 10], names=['sentiment', 'text'], skiprows=[0])
+        self.data['text_length'] = [len(text) for text in self.data['text']]
+

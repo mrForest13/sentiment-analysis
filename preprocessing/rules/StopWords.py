@@ -9,9 +9,8 @@ class StopWordsProcessor(Processor):
         self.stop_words = stopwords.words(language)
 
     def process(self, data):
-        super().process(data)
-
         processed_data = self.remove_stop_words(data)
+        super().process(processed_data)
         return self.next_processor.process(processed_data)
 
     def remove_stop_words(self, data):

@@ -17,7 +17,8 @@ class IMDbLoader(Loader):
         neg_data = self.load_data(self.neg_directory, 'negative')
         pos_data = self.load_data(self.pos_directory, 'positive')
 
-        self.data = pandas.DataFrame(neg_data + pos_data, columns=self.col_names)
+        self.data = pandas.DataFrame(neg_data + pos_data, columns=['sentiment', 'text'])
+        self.data['text_length'] = [len(text) for text in self.data['text']]
 
     def load_data(self, directory, label):
         join_path = path.join(self.data_directory, directory, '*.txt')
