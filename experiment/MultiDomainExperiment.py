@@ -25,6 +25,7 @@ data_loader.load()
 
 data = data_loader.get_data()
 
+plot_pie(data, data_loader.labels)
 plot_horizontal_bar(data, data_loader.labels, 'Liczba tweetów')
 plot_box(data)
 

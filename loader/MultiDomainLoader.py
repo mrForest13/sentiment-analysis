@@ -17,11 +17,9 @@ class MultiDomainLoader(Loader):
     def load(self):
         results = []
         for category in self.list_dir():
-            print(category)
             neg_data = self.load_data(category, self.neg_file, 'negative')
             pos_data = self.load_data(category, self.pos_file, 'positive')
             results = results + neg_data + pos_data
-            print(len(results))
 
         self.data = pandas.DataFrame(results, columns=['sentiment', 'text'])
         self.data['text_length'] = [len(text) for text in self.data['text']]

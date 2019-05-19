@@ -1,5 +1,7 @@
 from wordcloud import WordCloud
+
 import matplotlib.pyplot as plt
+import seaborn as sns
 import numpy as np
 
 
@@ -7,7 +9,7 @@ def plot_horizontal_bar(data, labels, x_label):
     y_pos = np.arange(len(labels))
     data_counts = data["sentiment"].value_counts()
     plt.barh(y_pos, data_counts, align='center', alpha=1)
-    plt.yticks(y_pos, labels)
+    plt.yticks(y_pos, translate_labels(labels))
     plt.xlabel(x_label)
 
     plt.show()
@@ -37,3 +39,17 @@ def plot_box(data):
     plt.boxplot(data['text_length'], sym='')
     plt.ylabel('Liczba znaków')
     plt.show()
+
+
+def plot_pie(data, labels):
+    colors = sns.color_palette("pastel")
+    data_count = data['sentiment'].value_counts()
+    plot = data_count.plot(kind="pie", labels=translate_labels(labels), explode=[0.02] * len(labels), colors=colors,
+                           autopct='%.2f%%')
+    plot.set_ylabel("opinia")
+    plt.show()
+
+
+def translate_labels(labels):
+    translate = {'negative': 'negatywna', 'neutral': 'neutralna', 'positive': 'pozytywna'}
+    return map(lambda x: translate.get(x), labels)
