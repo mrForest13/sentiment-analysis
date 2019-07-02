@@ -1,5 +1,4 @@
 from preprocessing.Processor import Processor
-from nltk import word_tokenize
 
 
 class TokenizerData(Processor):
@@ -14,4 +13,4 @@ class TokenizerData(Processor):
 
     @staticmethod
     def tokenize(data):
-        return data['text'].apply(lambda x: word_tokenize(x))
+        return data['text'].apply(lambda x: x.split())

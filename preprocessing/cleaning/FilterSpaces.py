@@ -1,3 +1,4 @@
+import swifter
 from preprocessing.Processor import Processor
 
 
@@ -10,4 +11,4 @@ class FilterSpacesProcessor(Processor):
 
     @staticmethod
     def remove_unnecessary_spaces(data):
-        return data["text"].apply(lambda x: " ".join(x.split()))
+        return data["text"].swifter.apply(lambda x: " ".join(x.split()))

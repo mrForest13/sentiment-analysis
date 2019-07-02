@@ -1,3 +1,4 @@
+import swifter
 from preprocessing.Processor import Processor
 from preprocessing.negations import Negations
 
@@ -11,4 +12,4 @@ class NegationHandlingProcessor(Processor):
 
     @staticmethod
     def transform_negations(data):
-        return data['text'].apply(lambda x: Negations.replace_negation(x))
+        return data['text'].swifter.apply(lambda x: Negations.replace_negation(x))

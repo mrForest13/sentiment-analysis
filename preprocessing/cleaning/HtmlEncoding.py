@@ -1,3 +1,4 @@
+import swifter
 from preprocessing.Processor import Processor
 
 import html
@@ -12,4 +13,4 @@ class HtmlEncodingProcessor(Processor):
 
     @staticmethod
     def remove_html_encoding(data):
-        return data['text'].apply(lambda x: html.unescape(x))
+        return data['text'].swifter.apply(lambda x: html.unescape(x))

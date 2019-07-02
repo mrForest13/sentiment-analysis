@@ -57,7 +57,7 @@ data = ProcessChainBuilder() \
     .build() \
     .process(data)
 
-classification = Classification(repeats=3)
+classification = Classification(folds=10)
 
 train, test, train_labels, test_labels = split_data(data)
 

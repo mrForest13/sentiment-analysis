@@ -1,3 +1,4 @@
+import swifter
 from preprocessing.Processor import Processor
 
 
@@ -10,4 +11,4 @@ class LowercaseAllProcessor(Processor):
 
     @staticmethod
     def lowercase_all(data):
-        return data['text'].apply(lambda x: x.lower())
+        return data['text'].swifter.apply(lambda x: x.lower())

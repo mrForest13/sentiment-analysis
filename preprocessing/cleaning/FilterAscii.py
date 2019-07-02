@@ -1,3 +1,4 @@
+import swifter
 from preprocessing.Processor import Processor
 
 
@@ -10,4 +11,4 @@ class FilterAsciiProcessor(Processor):
 
     @staticmethod
     def filter_ascii(data):
-        return data['text'].apply(lambda x: x.encode('ascii', errors='ignore').decode("utf-8"))
+        return data['text'].swifter.apply(lambda x: x.encode('ascii', errors='ignore').decode("utf-8"))

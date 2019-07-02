@@ -1,3 +1,4 @@
+import swifter
 from preprocessing.Processor import Processor
 
 import re
@@ -15,4 +16,4 @@ class TweeterHandlingProcessor(Processor):
         return self.next_processor.process(data)
 
     def remove_handling(self, data):
-        return data['text'].apply(lambda x: re.sub(self.regex, '', x))
+        return data['text'].swifter.apply(lambda x: re.sub(self.regex, '', x))

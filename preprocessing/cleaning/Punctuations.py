@@ -1,3 +1,5 @@
+import swifter
+from string import punctuation
 from preprocessing.Processor import Processor
 
 
@@ -10,4 +12,4 @@ class PunctuationsProcessor(Processor):
 
     @staticmethod
     def remove_punctuations(data):
-        return data['text'].apply(lambda x: " ".join([item for item in x.split() if item.isalpha()]))
+        return data['text'].swifter.apply(lambda x: "".join([item for item in x if item not in punctuation]))
