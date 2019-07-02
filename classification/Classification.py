@@ -1,5 +1,6 @@
 from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
 from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import make_scorer, precision_score, recall_score, accuracy_score, f1_score
 from sklearn.model_selection import GridSearchCV, KFold
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
@@ -11,7 +12,7 @@ import numpy as np
 
 classifiers = {
     'Naive Bayes': MultinomialNB(),
-    'Logistic Regression': LogisticRegression(),
+    # 'Logistic Regression': LogisticRegression(),
     # 'K Neighbors': KNeighborsClassifier(),
     # 'Decision Tree': DecisionTreeClassifier(),
     # 'Random Forest': RandomForestClassifier(),
@@ -52,6 +53,10 @@ parameters = {
     }
 }
 
+scorers = [
+    'accuracy', 'precision', 'recall', 'f1'
+]
+
 
 class Classification(object):
 
@@ -61,9 +66,10 @@ class Classification(object):
         self.folds = folds
         self.jobs = jobs
 
-    def fit(self, name, train, train_labels, scoring='accuracy'):
-        kf = KFold(n_splits=self.folds)
-        clf = GridSearchCV(classifiers[name], parameters[name], cv=kf, scoring=scoring, n_jobs=self.jobs)
+    def fit(self, name, train, train_labels):
+        kf = KFold(n_splits=self.folds, shuffle=True)
+        clf = GridSearchCV(classifiers[name], parameters[name], cv=kf, scoring=scorers, n_jobs=self.jobs,
+                           refit='f1')
         start_time = time.time()
         clf.fit(train, train_labels)
         self.fit_results[name] = clf
@@ -72,9 +78,9 @@ class Classification(object):
         print("Best scores: " + str(clf.best_score_))
         print()
 
-    def fit_all(self, train, train_labels, scoring='accuracy'):
+    def fit_all(self, train, train_labels):
         for name in classifiers.keys():
-            self.fit(name, train, train_labels, scoring)
+            self.fit(name, train, train_labels)
 
     def predict(self, name, test):
         self.predict_results[name] = self.fit_results[name].predict(test)

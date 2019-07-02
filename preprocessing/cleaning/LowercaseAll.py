@@ -1,5 +1,6 @@
-import swifter
 from preprocessing.Processor import Processor
+
+import swifter
 
 
 class LowercaseAllProcessor(Processor):

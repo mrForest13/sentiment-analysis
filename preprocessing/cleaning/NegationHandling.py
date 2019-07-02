@@ -1,6 +1,7 @@
-import swifter
 from preprocessing.Processor import Processor
 from preprocessing.negations import Negations
+
+import swifter
 
 
 class NegationHandlingProcessor(Processor):

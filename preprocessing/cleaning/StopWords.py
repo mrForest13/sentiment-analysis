@@ -1,6 +1,8 @@
-import swifter
+from sklearn.feature_selection import mutual_info_classif
 from preprocessing.Processor import Processor
 from nltk.corpus import stopwords
+
+import swifter
 
 
 class StopWordsProcessor(Processor):

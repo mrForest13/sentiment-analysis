@@ -66,7 +66,7 @@ cv = CountVectorizer(ngram_range=(1, 1))
 bag_of_words_train = cv.fit_transform(train)
 bag_of_words_test = cv.transform(test)
 
-classification.fit_all(bag_of_words_train, train_labels, scoring='accuracy')
+classification.fit_all(bag_of_words_train, train_labels)
 classification.predict_all(bag_of_words_test)
 
 best_accuracy = []

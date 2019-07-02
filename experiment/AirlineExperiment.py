@@ -1,5 +1,5 @@
 from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, classification_report
 
 from preprocessing.ProcessChainBuilder import ProcessChainBuilder
 from preprocessing.cleaning.NegationHandling import NegationHandlingProcessor
@@ -11,7 +11,7 @@ from preprocessing.cleaning.FilterSpaces import FilterSpacesProcessor
 from preprocessing.cleaning.HtmlEncoding import HtmlEncodingProcessor
 from preprocessing.cleaning.LowercaseAll import LowercaseAllProcessor
 from preprocessing.cleaning.FilterAscii import FilterAsciiProcessor
-from preprocessing.normalization.DataLemmatizer import DataLemmatizer
+from preprocessing.normalization.DataStemmer import DataStemmer
 from preprocessing.normalization.DataLemmatizer import DataLemmatizer
 from preprocessing.normalization.TokenizerData import TokenizerData
 from preprocessing.normalization.JoinTokens import JoinTokens
@@ -20,14 +20,24 @@ from sklearn.model_selection import train_test_split
 from loader.AirlineLoader import ArlineLoader
 from plot.Ploter import *
 
-data_loader = ArlineLoader("C:\\Users\\mateu\\Downloads\\airline\\Tweets.csv")
+data_loader = ArlineLoader("/home/mligeza/Downloads/airline/Tweets.csv")
 
 data_loader.load()
 
 data = data_loader.get_data()
 
-#plot_pie(data, data_loader.labels)
-#plot_box(data)
+
+def change(x):
+    if x == 'neutral' or x == 'positive':
+        return 1
+    else:
+        return 0
+
+
+data['sentiment'] = data['sentiment'].apply(lambda x: change(x))
+
+# plot_pie(data, data_loader.labels)
+# plot_box(data)
 
 data = ProcessChainBuilder() \
     .next(FilterAsciiProcessor()) \
@@ -40,8 +50,9 @@ data = ProcessChainBuilder() \
     .build() \
     .process(data)
 
-#plot_word_cloud(data, 'negative')
-#plot_word_cloud(data, 'positive')
+
+# plot_word_cloud(data, 'negative')
+# plot_word_cloud(data, 'positive')
 
 
 def split_data(frame, size=0.2):
@@ -64,14 +75,12 @@ cv = CountVectorizer(ngram_range=(1, 1))
 bag_of_words_train = cv.fit_transform(train)
 bag_of_words_test = cv.transform(test)
 
-classification.fit_all(bag_of_words_train, train_labels, scoring='accuracy')
+classification.fit_all(bag_of_words_train, train_labels)
 classification.predict_all(bag_of_words_test)
 
-best_accuracy = []
-
 for name, result in classification.predict_results.items():
-    acc = accuracy_score(test_labels, result)
-    best_accuracy.append(acc)
-    print("Accuracy for {}: {:.4%}".format(name, acc))
+    report = classification_report(test_labels, result)
+    print("Classification Report for {}".format(name))
+    print(report)
 
-#plot_vertical_bar(best_accuracy, classifiers.keys(), 'Dokładność')
+# plot_vertical_bar(best_accuracy, classifiers.keys(), 'Dokładność')

@@ -1,5 +1,5 @@
 from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, mutual_info_score
 
 from preprocessing.ProcessChainBuilder import ProcessChainBuilder
 from preprocessing.cleaning.NegationHandling import NegationHandlingProcessor
@@ -20,12 +20,23 @@ from preprocessing.normalization.TokenizerData import TokenizerData
 from nltk import word_tokenize
 import collections, numpy
 
+from sklearn.feature_selection import mutual_info_classif
+
+X = np.array([[0, 0, 0],
+                [1, 1, 0],
+                [2, 0, 1],
+                [2, 0, 1],
+                [2, 0, 1]])
+y = np.array([0, 1, 2, 2, 1])
+
+print(mutual_info_classif(X, y, discrete_features=True))
+
 cos = ngrams('Mateusz ligeza cos tam'.split(), 1)
 cos1 = ngrams('Mateusz ligeza cos tam gdziesz poszedl'.split(), 1)
 
-print(collections.Counter(['ja','ja','ty']))
+print(collections.Counter(['ja', 'ja', 'ty']))
 
-cos3 = set({k: v for k, v in dict(collections.Counter(['ja','ja','ty'])).items() if v > 1}.keys())
+cos3 = set({k: v for k, v in dict(collections.Counter(['ja', 'ja', 'ty'])).items() if v > 1}.keys())
 
 print(cos3)
 
