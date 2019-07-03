@@ -1,6 +1,8 @@
+from configuration import DatasetsConfig
 from loader.IMDbLoader import IMDbLoader
 from loader.MultiDomainLoader import MultiDomainLoader
 from preprocessing.ProcessChainBuilder import ProcessChainBuilder
+from preprocessing.cleaning.EmoticonsChange import EmoticonsChangeProcessor
 from preprocessing.cleaning.NegationHandling import NegationHandlingProcessor
 from preprocessing.cleaning.Punctuations import PunctuationsProcessor
 from preprocessing.normalization.StopWords import StopWordsProcessor
@@ -37,6 +39,7 @@ def clean_process(data, plot=False):
         .next(HtmlEncodingProcessor()) \
         .next(TweeterHandlingProcessor()) \
         .next(NegationHandlingProcessor()) \
+        .next(EmoticonsChangeProcessor()) \
         .next(PunctuationsProcessor()) \
         .next(FilterSpacesProcessor()) \
         .build() \
@@ -49,33 +52,33 @@ def clean_process(data, plot=False):
     return processed_data
 
 
-def steaming(data):
+def steaming(data, list_name):
     processed_data = ProcessChainBuilder() \
         .next(TokenizeDataProcessor()) \
         .next(DataLemmatizationProcessor()) \
         .next(JoinTokensProcessor()) \
-        .next(StopWordsProcessor()) \
+        .next(StopWordsProcessor(list_name)) \
         .build() \
         .process(data)
 
     return processed_data
 
 
-arline_loader = ArlineLoader("C:\\Users\\mateu\\Downloads\\airline\\Tweets.csv")
-review_loader = IMDbLoader("C:\\Users\\mateu\\Downloads\\aclImdb\\train", 'pos', 'neg')
-amazon_loader = MultiDomainLoader("C:\\Users\\mateu\\Downloads\\sorted_data", "positive.review", "negative.review")
+arline_loader = ArlineLoader(DatasetsConfig.AIRLINE)
+review_loader = IMDbLoader(DatasetsConfig.REVIEW, 'pos', 'neg')
+amazon_loader = MultiDomainLoader(DatasetsConfig.AMAZON, "positive.review", "negative.review")
 
 all_data = {
-    "arline_loader": arline_loader,
-    "review_loader": review_loader,
-    "amazon_loader": amazon_loader
+    "arline": arline_loader,
+    # "review": review_loader,
+    # "amazon": amazon_loader
 }
 
 for name, loader in all_data.items():
     print("Start processing {} ...".format(name))
     loaded_data = load_data(loader)
     cleaned_data = clean_process(loaded_data)
-    normalized_data = steaming(cleaned_data)
+    normalized_data = steaming(cleaned_data, name)
 
     normalized_data['text_length'] = [len(text) for text in normalized_data['text']]
     normalized_data = normalized_data[normalized_data['text_length'] > 0]

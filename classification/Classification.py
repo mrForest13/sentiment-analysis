@@ -60,16 +60,17 @@ scorers = [
 
 class Classification(object):
 
-    def __init__(self, folds=10, jobs=-1):
+    def __init__(self, folds=10, jobs=-1, score='f1'):
         self.fit_results = {}
         self.predict_results = {}
+        self.score = score
         self.folds = folds
         self.jobs = jobs
 
     def fit(self, name, train, train_labels):
         kf = KFold(n_splits=self.folds, shuffle=True)
         clf = GridSearchCV(classifiers[name], parameters[name], cv=kf, scoring=scorers, n_jobs=self.jobs,
-                           refit='f1')
+                           refit=self.score)
         start_time = time.time()
         clf.fit(train, train_labels)
         self.fit_results[name] = clf

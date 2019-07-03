@@ -1,0 +1,47 @@
+emoticon_dic = {
+    ":-)": "emoticon_smiley",
+    ":)": "emoticon_smiley",
+    ":]": "emoticon_smiley",
+    ":-]": "emoticon_smiley",
+    ":3": "emoticon_smiley",
+    ":-3": "emoticon_smiley",
+    ":-D": "emoticon_laugh",
+    ":D": "emoticon_laugh",
+    "X-D": "emoticon_laugh",
+    "XD": "emoticon_laugh",
+    "8D": "emoticon_laugh",
+    "8-D": "emoticon_laugh",
+    "<3": "emoticon_love",
+    ":-*": "emoticon_kiss",
+    ":*": "emoticon_kiss",
+    ":-(": "emoticon_sad",
+    ":(": "emoticon_sad",
+    ":-<": "emoticon_sad",
+    ":<": "emoticon_sad",
+    ":-C": "emoticon_sad",
+    ":C": "emoticon_sad",
+    ":'-(": "emoticon_cry",
+    ":'(": "emoticon_cry",
+    ":P": "emoticon_tongue",
+    ":-P": "emoticon_tongue",
+    "X-P": "emoticon_tongue",
+    "XP": "emoticon_tongue",
+    ";-)": "emoticon_wink",
+    ";)": "emoticon_wink",
+    "*-)": "emoticon_wink",
+    "*)": "emoticon_wink",
+    ";-]": "emoticon_wink",
+    ";]": "emoticon_wink",
+    ":/": "emoticon_skeptical",
+    "D‑':": "emoticon_skeptical",
+    "D:<": "emoticon_disgust",
+    "D:": "emoticon_disgust",
+    "D8": "emoticon_disgust",
+    "D;": "emoticon_disgust",
+}
+
+
+def replace_emoticon(text):
+    for key, value in emoticon_dic.items():
+        text = text.replace(key, value)
+    return text
