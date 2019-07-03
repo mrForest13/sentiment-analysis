@@ -2,7 +2,7 @@ from preprocessing.Processor import Processor
 from nltk import PorterStemmer
 
 
-class DataStemmer(Processor):
+class DataStemmingProcessor(Processor):
 
     def __init__(self):
         super().__init__()

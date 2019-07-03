@@ -1,7 +1,7 @@
 from preprocessing.Processor import Processor
 
 
-class JoinTokens(Processor):
+class JoinTokensProcessor(Processor):
 
     def __init__(self):
         super().__init__()

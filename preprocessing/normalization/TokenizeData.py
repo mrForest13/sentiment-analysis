@@ -1,7 +1,7 @@
 from preprocessing.Processor import Processor
 
 
-class TokenizerData(Processor):
+class TokenizeDataProcessor(Processor):
 
     def __init__(self):
         super().__init__()

@@ -1,10 +1,7 @@
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.metrics import accuracy_score, mutual_info_score
-
 from preprocessing.ProcessChainBuilder import ProcessChainBuilder
 from preprocessing.cleaning.NegationHandling import NegationHandlingProcessor
 from preprocessing.cleaning.Punctuations import PunctuationsProcessor
-from preprocessing.cleaning.StopWords import StopWordsProcessor
+from preprocessing.normalization.StopWords import StopWordsProcessor
 from preprocessing.cleaning.TweeterHandling import TweeterHandlingProcessor
 from preprocessing.cleaning.FilterHtmlLink import FilterHtmlLinkProcessor
 from preprocessing.cleaning.FilterSpaces import FilterSpacesProcessor
@@ -14,11 +11,9 @@ from preprocessing.cleaning.FilterAscii import FilterAsciiProcessor
 from loader.AirlineLoader import ArlineLoader
 from nltk.util import ngrams
 from plot.Ploter import *
-from preprocessing.normalization.DataLemmatizer import DataLemmatizer
-from preprocessing.normalization.JoinTokens import JoinTokens
-from preprocessing.normalization.TokenizerData import TokenizerData
-from nltk import word_tokenize
-import collections, numpy
+from preprocessing.normalization.DataLemmatization import DataLemmatizer
+from preprocessing.normalization.TokenizeData import TokenizeData
+import collections
 
 from sklearn.feature_selection import mutual_info_classif
 
@@ -60,7 +55,7 @@ data = ProcessChainBuilder() \
     .process(data)
 
 data = ProcessChainBuilder() \
-    .next(TokenizerData()) \
+    .next(TokenizeData()) \
     .next(DataLemmatizer()) \
     .build() \
     .process(data)

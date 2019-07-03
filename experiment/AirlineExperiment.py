@@ -1,26 +1,22 @@
 from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.metrics import accuracy_score, classification_report
+from sklearn.metrics import classification_report
 
 from preprocessing.ProcessChainBuilder import ProcessChainBuilder
 from preprocessing.cleaning.NegationHandling import NegationHandlingProcessor
 from preprocessing.cleaning.Punctuations import PunctuationsProcessor
-from preprocessing.cleaning.StopWords import StopWordsProcessor
 from preprocessing.cleaning.TweeterHandling import TweeterHandlingProcessor
 from preprocessing.cleaning.FilterHtmlLink import FilterHtmlLinkProcessor
 from preprocessing.cleaning.FilterSpaces import FilterSpacesProcessor
 from preprocessing.cleaning.HtmlEncoding import HtmlEncodingProcessor
-from preprocessing.cleaning.LowercaseAll import LowercaseAllProcessor
 from preprocessing.cleaning.FilterAscii import FilterAsciiProcessor
-from preprocessing.normalization.DataStemmer import DataStemmer
-from preprocessing.normalization.DataLemmatizer import DataLemmatizer
-from preprocessing.normalization.TokenizerData import TokenizerData
-from preprocessing.normalization.JoinTokens import JoinTokens
-from classification.Classification import Classification, classifiers
+from preprocessing.normalization.DataLemmatization import DataLemmatizationProcessor
+from preprocessing.normalization.TokenizeData import TokenizeDataProcessor
+from preprocessing.normalization.JoinTokens import JoinTokensProcessor
+from classification.Classification import Classification
 from sklearn.model_selection import train_test_split
 from loader.AirlineLoader import ArlineLoader
-from plot.Ploter import *
 
-data_loader = ArlineLoader("/home/mligeza/Downloads/airline/Tweets.csv")
+data_loader = ArlineLoader("C:\\Users\\mateu\\Downloads\\/airline/Tweets.csv")
 
 data_loader.load()
 
@@ -60,9 +56,9 @@ def split_data(frame, size=0.2):
 
 
 data = ProcessChainBuilder() \
-    .next(TokenizerData()) \
-    .next(DataLemmatizer()) \
-    .next(JoinTokens()) \
+    .next(TokenizeDataProcessor()) \
+    .next(DataLemmatizationProcessor()) \
+    .next(JoinTokensProcessor()) \
     .build() \
     .process(data)
 

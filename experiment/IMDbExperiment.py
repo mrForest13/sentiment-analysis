@@ -4,15 +4,15 @@ from sklearn.metrics import accuracy_score
 from preprocessing.ProcessChainBuilder import ProcessChainBuilder
 from preprocessing.cleaning.NegationHandling import NegationHandlingProcessor
 from preprocessing.cleaning.Punctuations import PunctuationsProcessor
-from preprocessing.cleaning.StopWords import StopWordsProcessor
+from preprocessing.normalization.StopWords import StopWordsProcessor
 from preprocessing.cleaning.TweeterHandling import TweeterHandlingProcessor
 from preprocessing.cleaning.FilterHtmlLink import FilterHtmlLinkProcessor
 from preprocessing.cleaning.FilterSpaces import FilterSpacesProcessor
 from preprocessing.cleaning.HtmlEncoding import HtmlEncodingProcessor
 from preprocessing.cleaning.LowercaseAll import LowercaseAllProcessor
 from preprocessing.cleaning.FilterAscii import FilterAsciiProcessor
-from preprocessing.normalization.DataLemmatizer import DataLemmatizer
-from preprocessing.normalization.TokenizerData import TokenizerData
+from preprocessing.normalization.DataLemmatization import DataLemmatizer
+from preprocessing.normalization.TokenizeData import TokenizeData
 from preprocessing.normalization.JoinTokens import JoinTokens
 from classification.Classification import Classification, classifiers
 from sklearn.model_selection import train_test_split
@@ -51,7 +51,7 @@ def split_data(frame, size=0.2):
 
 
 data = ProcessChainBuilder() \
-    .next(TokenizerData()) \
+    .next(TokenizeData()) \
     .next(DataLemmatizer()) \
     .next(JoinTokens()) \
     .build() \

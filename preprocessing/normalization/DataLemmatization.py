@@ -6,7 +6,7 @@ from nltk.corpus import wordnet
 from nltk import WordNetLemmatizer
 
 
-class DataLemmatizer(Processor):
+class DataLemmatizationProcessor(Processor):
 
     def __init__(self):
         super().__init__()
