@@ -1,6 +1,5 @@
 from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import make_scorer, precision_score, recall_score, accuracy_score, f1_score
 from sklearn.model_selection import GridSearchCV, KFold
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
@@ -12,12 +11,12 @@ import numpy as np
 
 classifiers = {
     'Naive Bayes': MultinomialNB(),
-    # 'Logistic Regression': LogisticRegression(),
-    # 'K Neighbors': KNeighborsClassifier(),
-    # 'Decision Tree': DecisionTreeClassifier(),
-    # 'Random Forest': RandomForestClassifier(),
-    # 'Ada Boost': AdaBoostClassifier(),
-    # 'SVM': SVC(),
+    'Logistic Regression': LogisticRegression(),
+    'K Neighbors': KNeighborsClassifier(),
+    'Decision Tree': DecisionTreeClassifier(),
+    'Random Forest': RandomForestClassifier(),
+    'Ada Boost': AdaBoostClassifier(),
+    'SVM': SVC(),
 }
 
 parameters = {

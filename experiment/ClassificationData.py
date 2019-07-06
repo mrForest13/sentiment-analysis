@@ -30,15 +30,15 @@ amazon_loader = PreprocessedDataLoader('processed/amazon.csv')
 
 all_data = {
     "arline": arline_loader,
-    # "review": review_loader,
-    # "amazon": amazon_loader
+    "review": review_loader,
+    "amazon": amazon_loader
 }
 
 for name, loader in all_data.items():
     print("Start processing {} ...".format(name))
     loaded_data = load_data(loader)
 
-    classification = Classification(folds=10, score='accuracy')
+    classification = Classification(folds=10, score='f1')
 
     train, test, train_labels, test_labels = split_data(loaded_data)
 

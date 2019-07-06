@@ -52,7 +52,7 @@ def clean_process(data, plot=False):
     return processed_data
 
 
-def steaming(data, list_name):
+def normalize(data, list_name):
     processed_data = ProcessChainBuilder() \
         .next(TokenizeDataProcessor()) \
         .next(DataLemmatizationProcessor()) \
@@ -70,15 +70,15 @@ amazon_loader = MultiDomainLoader(DatasetsConfig.AMAZON, "positive.review", "neg
 
 all_data = {
     "arline": arline_loader,
-    # "review": review_loader,
-    # "amazon": amazon_loader
+    "review": review_loader,
+    "amazon": amazon_loader
 }
 
 for name, loader in all_data.items():
     print("Start processing {} ...".format(name))
     loaded_data = load_data(loader)
     cleaned_data = clean_process(loaded_data)
-    normalized_data = steaming(cleaned_data, name)
+    normalized_data = normalize(cleaned_data, name)
 
     normalized_data['text_length'] = [len(text) for text in normalized_data['text']]
     normalized_data = normalized_data[normalized_data['text_length'] > 0]
