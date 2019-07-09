@@ -1,10 +1,12 @@
-from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics import classification_report
 from sklearn.model_selection import train_test_split
 from classification.Classification import Classification
 from loader.PreprocessedDataLoader import PreprocessedDataLoader
 from plot.Ploter import plot_pie, plot_box
-from sklearn.feature_extraction.text import TfidfVectorizer
+
+from vectorization.BagOfWordsModel import BagOfWordsModel
+from vectorization.Doc2VecModel import Doc2VecModel
+from vectorization.TdIdfModel import TfIdfModel
 
 
 def load_data(data_loader, plot=False):
@@ -31,34 +33,47 @@ amazon_loader = PreprocessedDataLoader('processed/amazon.csv')
 
 all_data = {
     "arline": arline_loader,
-    "review": review_loader,
-    "amazon": amazon_loader
+    # "review": review_loader,
+    # "amazon": amazon_loader
 }
 
 model = 'Naive Bayes'
 
-for name, loader in all_data.items():
-    print("Start processing {} ...".format(name))
-    loaded_data = load_data(loader)
 
-    classification = Classification(folds=20, score='accuracy')
+def predict(vectorizer):
+    for name, loader in all_data.items():
+        print("Start processing for {} ...".format(name))
+        loaded_data = load_data(loader)
 
-    train, test, train_labels, test_labels = split_data(loaded_data)
+        classification = Classification(folds=10, score='accuracy')
 
-    cv = CountVectorizer(ngram_range=(1, 1), tokenizer=lambda x: x.split())
+        train, test, train_labels, test_labels = split_data(loaded_data)
 
-    bag_of_words_train = cv.fit_transform(train)
-    bag_of_words_test = cv.transform(test)
+        train_data = vectorizer.fit_transform(train)
+        test_data = vectorizer.transform(test)
 
-    print("Number of n-grams: {}".format(len(cv.vocabulary_)))
+        classification.fit(model, train_data, train_labels)
+        classification.predict(model, test_data)
 
-    classification.fit(model, bag_of_words_train, train_labels)
-    classification.predict(model, bag_of_words_test)
+        result = classification.predict_results[model]
+        report = classification_report(test_labels, result)
 
-    result = classification.predict_results[model]
-    report = classification_report(test_labels, result)
+        print("Classification Report for {}".format(model))
+        print(report)
 
-    print("Classification Report for {}".format(model))
-    print(report)
+        print("Finish processing for {}".format(name))
+        print()
 
-    print("Finish processing {}".format(name))
+        return result
+
+
+# uni_gram_bow = predict(BagOfWordsModel(1))
+# bi_gram_bow = predict(BagOfWordsModel(2))
+# tri_gram_bow = predict(BagOfWordsModel(3))
+#
+# uni_gram_td_idf = predict(TfIdfModel(1))
+# bi_gram_td_idf = predict(TfIdfModel(2))
+# tri_gram_td_idf = predict(TfIdfModel(3))
+
+doc_2_vec_dm = predict(Doc2VecModel(dm=1))
+doc_2_vec_dbow = predict(Doc2VecModel(dm=0))

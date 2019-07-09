@@ -1,11 +1,11 @@
-from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer
 from vectorization.Vectorizer import Vectorizer
 
 
-class BagOfWords(Vectorizer):
+class TfIdfModel(Vectorizer):
 
     def __init__(self, n):
-        self.model = CountVectorizer(ngram_range=(n, n), tokenizer=lambda x: x.split())
+        self.model = TfidfVectorizer(ngram_range=(n, n), tokenizer=lambda x: x.split())
 
     def fit_transform(self, data):
         return self.model.fit_transform(data)
