@@ -7,7 +7,8 @@ import multiprocessing
 
 class Doc2VecModel(Vectorizer):
 
-    def __init__(self, dm=0, size=300):
+    def __init__(self, dm=0, size=300, min_frequent=0):
+        super().__init__(min_frequent)
         cores = multiprocessing.cpu_count()
         self.epochs = range(100)
         self.model = Doc2Vec(dm=dm, vector_size=size, sample=0, window=5, min_count=1, workers=cores, alpha=0.025,

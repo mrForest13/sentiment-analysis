@@ -67,13 +67,13 @@ def predict(vectorizer):
         return result
 
 
-# uni_gram_bow = predict(BagOfWordsModel(1))
-# bi_gram_bow = predict(BagOfWordsModel(2))
-# tri_gram_bow = predict(BagOfWordsModel(3))
-#
-# uni_gram_td_idf = predict(TfIdfModel(1))
-# bi_gram_td_idf = predict(TfIdfModel(2))
-# tri_gram_td_idf = predict(TfIdfModel(3))
+uni_gram_bow = predict(BagOfWordsModel(n=1))
+bi_gram_bow = predict(BagOfWordsModel(n=2, min_frequent=1))
+tri_gram_bow = predict(BagOfWordsModel(n=3, min_frequent=1))
+
+uni_gram_td_idf = predict(TfIdfModel(n=1))
+bi_gram_td_idf = predict(TfIdfModel(n=2, min_frequent=1))
+tri_gram_td_idf = predict(TfIdfModel(n=3, min_frequent=1))
 
 doc_2_vec_dm = predict(Doc2VecModel(dm=1))
 doc_2_vec_dbow = predict(Doc2VecModel(dm=0))
