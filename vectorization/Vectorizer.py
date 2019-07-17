@@ -8,6 +8,13 @@ class Vectorizer(object):
         self.model = None
 
     @abc.abstractmethod
+    def clean(self):
+        return
+
+    def name(self):
+        return "Tf-Idf"
+
+    @abc.abstractmethod
     def fit_transform(self, data):
         return
 
@@ -29,3 +36,7 @@ class Vectorizer(object):
         print('Vocabulary after filter {}'.format(len(filtered_voc)))
 
         return dict(filtered_voc)
+
+    @abc.abstractmethod
+    def name(self):
+        return

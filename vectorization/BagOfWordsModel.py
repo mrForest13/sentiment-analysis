@@ -6,7 +6,14 @@ class BagOfWordsModel(Vectorizer):
 
     def __init__(self, n, min_frequent=0):
         super().__init__(min_frequent)
+        self.n = n
         self.model = CountVectorizer(ngram_range=(n, n), tokenizer=lambda x: x.split())
+
+    def clean(self):
+        self.__init__(self.n, self.min_frequent)
+
+    def name(self):
+        return "Bag of Word"
 
     def fit_transform(self, data):
         fit_data = self.model.fit_transform(data)

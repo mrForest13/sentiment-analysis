@@ -14,6 +14,12 @@ class Doc2VecModel(Vectorizer):
         self.model = Doc2Vec(dm=dm, vector_size=size, sample=0, window=5, min_count=1, workers=cores, alpha=0.025,
                              min_alpha=0.00025, negative=5)
 
+    def clean(self):
+        self.__init__(self.model.dm, self.model.vector_size, self.min_frequent)
+
+    def name(self):
+        return "Doc2Vec {}".format('PV-DM' if self.model.dm == 1 else 'PV-DBOW')
+
     def fit_transform(self, data):
         tagged_data = self.tagged_data(data)
         self.model.build_vocab(tagged_data)
