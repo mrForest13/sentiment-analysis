@@ -1,4 +1,5 @@
 import abc
+import numpy
 
 
 class Vectorizer(object):
@@ -24,7 +25,8 @@ class Vectorizer(object):
 
     def filter_not_frequent(self, data):
         feature_names = self.model.get_feature_names()
-        voc_sum = sum(data.toarray())
+
+        voc_sum = self.sum_tokens(data, len(feature_names))
 
         print('Vocabulary before filter {}'.format(len(voc_sum)))
 
@@ -38,5 +40,16 @@ class Vectorizer(object):
         return dict(filtered_voc)
 
     @abc.abstractmethod
-    def name(self):
+    def model_name(self):
         return
+
+    @staticmethod
+    def sum_tokens(data, n):
+        voc = numpy.zeros(n)
+
+        for x in data:
+            for i, v in zip(x.indices, x.data):
+                voc[i] += v
+
+        return voc
+

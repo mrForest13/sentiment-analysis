@@ -1,30 +1,28 @@
-from gensim.models.doc2vec import TaggedDocument
-from nltk import word_tokenize
-from pandas import DataFrame
-import uuid
-from gensim.models.doc2vec import Doc2Vec
+from sklearn.feature_extraction.text import CountVectorizer
 
-data = ["I love machine learning Its awesome",
+import numpy as np
 
-        "I love coding in python",
+corpus = [
+    'This is the first document.',
+    'This document is the second document.',
+    'And this is the third one.',
+    'Is this the first document?',
+]
 
-        "I love building chatbots",
+vectorizer = CountVectorizer()
+X = vectorizer.fit_transform(corpus)
 
-        "they chat amagingly well"]
+print(X.shape)
 
-docs = [TaggedDocument(words=word_tokenize(_d.lower()), tags=[str(i)]) for i, _d in enumerate(data)]
+print(vectorizer.get_feature_names())
+print(vectorizer.vocabulary_)
 
-model = Doc2Vec(dm=1, vector_size=5, sample=0, window=2, min_count=1, workers=4, epochs=20)
+print(X.toarray().sum(axis=0))
 
-print(docs)
+voc = np.zeros(9)
 
-model.build_vocab(docs)
+for x in X:
+    for i, v in zip(x.indices, x.data):
+        voc[i] += v
 
-model.train(docs, total_examples=model.corpus_count, epochs=model.iter)
-
-print(model.docvecs[0])
-
-test_data = word_tokenize("they chat amagingly well")
-v1 = model.infer_vector(test_data)
-
-print(v1)
+print(voc)

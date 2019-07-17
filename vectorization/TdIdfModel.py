@@ -12,8 +12,8 @@ class TfIdfModel(Vectorizer):
     def clean(self):
         self.__init__(self.n, self.min_frequent)
 
-    def name(self):
-        return "Tf-Idf"
+    def model_name(self):
+        return "Tf-Idf {}-grams".format(self.n)
 
     def fit_transform(self, data):
         fit_data = self.model.fit_transform(data)

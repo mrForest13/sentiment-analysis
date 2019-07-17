@@ -17,7 +17,7 @@ class Doc2VecModel(Vectorizer):
     def clean(self):
         self.__init__(self.model.dm, self.model.vector_size, self.min_frequent)
 
-    def name(self):
+    def model_name(self):
         return "Doc2Vec {}".format('PV-DM' if self.model.dm == 1 else 'PV-DBOW')
 
     def fit_transform(self, data):

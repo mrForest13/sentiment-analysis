@@ -70,7 +70,7 @@ def predict(vectorizer):
         print("Finish processing for {}".format(name))
         print()
 
-        result_dict['model'] = vectorizer.name()
+        result_dict['model'] = vectorizer.model_name()
         result_dict[name] = [round(accuracy_score(test_labels, result), 4)]
 
         vectorizer.clean()
@@ -95,9 +95,11 @@ frames = [
     tri_gram_bow,
     uni_gram_td_idf,
     bi_gram_td_idf,
-    tri_gram_td_idf
+    tri_gram_td_idf,
+    doc_2_vec_dm,
+    doc_2_vec_dbow
 ]
 
-file_name = model.lower().replace("", "_")
+file_name = model.lower().replace(" ", "_")
 columns = ['arline', 'review', 'amazon', 'model']
 pandas.concat(frames).to_csv('results/{}.csv'.format(file_name), encoding='utf-8', columns=columns)
