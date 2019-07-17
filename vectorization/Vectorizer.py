@@ -1,5 +1,6 @@
 import abc
 import numpy
+from sklearn.feature_extraction.text import CountVectorizer
 
 
 class Vectorizer(object):
@@ -23,10 +24,14 @@ class Vectorizer(object):
     def transform(self, data):
         return
 
-    def filter_not_frequent(self, data):
-        feature_names = self.model.get_feature_names()
+    def filter_not_frequent(self, data, n):
+        model = CountVectorizer(ngram_range=(n, n), tokenizer=lambda x: x.split())
 
-        voc_sum = self.sum_tokens(data, len(feature_names))
+        fit_data = model.fit_transform(data)
+
+        feature_names = model.get_feature_names()
+
+        voc_sum = self.sum_tokens(fit_data, len(feature_names))
 
         print('Vocabulary before filter {}'.format(len(voc_sum)))
 

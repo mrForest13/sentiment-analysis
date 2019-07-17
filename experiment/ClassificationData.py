@@ -46,7 +46,7 @@ def predict(vectorizer):
     result_dict = {}
 
     for name, loader in all_data.items():
-        print("Start processing for {} ...".format(name))
+        print("Start processing for {} and {} ...".format(name, vectorizer.model_name()))
         loaded_data = load_data(loader)
 
         print(len(loaded_data))

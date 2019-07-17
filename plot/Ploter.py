@@ -5,22 +5,30 @@ import seaborn as sns
 import numpy as np
 
 
-def plot_horizontal_bar(data, labels, x_label):
-    y_pos = np.arange(len(labels))
-    data_counts = data["sentiment"].value_counts()
-    plt.barh(y_pos, data_counts, align='center', alpha=1)
-    plt.yticks(y_pos, translate_labels(labels))
-    plt.xlabel(x_label)
+def plot_vertical_bar(data, y_label='Dokładność'):
+    bar_width = 0.25
 
-    plt.show()
+    arline = data['arline'].tolist()
+    review = data['review'].tolist()
+    amazon = data['amazon'].tolist()
 
+    models = data['model'].tolist()
 
-def plot_vertical_bar(data, keys, x_label):
-    y_pos = np.arange(len(data))
-    plt.bar(y_pos, data)
-    plt.xticks(y_pos, keys, rotation=45)
-    plt.ylabel(x_label)
-    plt.xlabel('Model')
+    r1 = np.arange(len(arline))
+    r2 = [x + bar_width for x in r1]
+    r3 = [x + bar_width for x in r2]
+
+    colors = sns.color_palette("deep")
+
+    plt.bar(r1, arline, color=colors[0], width=bar_width, edgecolor='white', label='arline')
+    plt.bar(r2, review, color=colors[1], width=bar_width, edgecolor='white', label='review')
+    plt.bar(r3, amazon, color=colors[2], width=bar_width, edgecolor='white', label='amazon')
+
+    plt.xticks([r + bar_width for r in range(len(arline))], models, rotation=0)
+
+    plt.ylabel(y_label, fontsize=12)
+    plt.legend(ncol=3)
+    plt.ylim(top=1.15)
     plt.show()
 
 

@@ -13,11 +13,10 @@ class BagOfWordsModel(Vectorizer):
         self.__init__(self.n, self.min_frequent)
 
     def model_name(self):
-        return "Bag of Word {}-grams".format(self.n)
+        return "BoW {}-grams".format(self.n)
 
     def fit_transform(self, data):
-        fit_data = self.model.fit_transform(data)
-        filtered_voc = self.filter_not_frequent(fit_data)
+        filtered_voc = self.filter_not_frequent(data, self.n)
         self.model.vocabulary = dict(filtered_voc)
 
         return self.model.fit_transform(data)

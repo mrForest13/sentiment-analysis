@@ -16,8 +16,7 @@ class TfIdfModel(Vectorizer):
         return "Tf-Idf {}-grams".format(self.n)
 
     def fit_transform(self, data):
-        fit_data = self.model.fit_transform(data)
-        filtered_voc = self.filter_not_frequent(fit_data)
+        filtered_voc = self.filter_not_frequent(data, self.n)
         self.model.vocabulary = dict(filtered_voc)
 
         return self.model.fit_transform(data)
