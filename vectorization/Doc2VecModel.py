@@ -24,7 +24,8 @@ class Doc2VecModel(Vectorizer):
         tagged_data = self.tagged_data(data)
         self.model.build_vocab(tagged_data)
         self.model.train(tagged_data, total_examples=self.model.corpus_count, epochs=self.model.epochs)
-        return np.array([self.model.docvecs[str(i)] for i in range(len(tagged_data))])
+        result = np.array([self.model.docvecs[str(i)] for i in range(len(tagged_data))])
+        return (result - np.min(result))/np.ptp(result)
 
     def transform(self, data):
         tagged_data = self.tagged_data(data)
