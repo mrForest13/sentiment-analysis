@@ -12,5 +12,4 @@ class ResultsDataLoader(Loader):
     def load(self):
         csv_path = self.csv_path
 
-        columns = ['arline', 'review', 'amazon', 'model']
-        self.data = pandas.read_csv(csv_path, header=None, names=columns, skiprows=[0])
+        self.data = pandas.read_csv(csv_path)

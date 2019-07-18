@@ -73,10 +73,8 @@ class Classification(object):
         start_time = time.time()
         clf.fit(train, train_labels)
         self.fit_results[name] = clf
-        print("Execution time for fit {}: {}s".format(name, time.time() - start_time))
-        print("Best params: " + str(clf.best_params_))
-        print("Best scores: " + str(clf.best_score_))
-        print()
+
+        return ClassificationResult(clf, time.time() - start_time)
 
     def fit_all(self, train, train_labels):
         for name in classifiers.keys():
@@ -88,3 +86,16 @@ class Classification(object):
     def predict_all(self, test):
         for name in classifiers.keys():
             self.predict(name, test)
+
+
+class ClassificationResult(object):
+
+    def __init__(self, model, execution_time):
+        index = model.best_index_
+        self.best_param = model.best_params_
+        self.execution_time = execution_time
+        self.precision = model.cv_results_['mean_test_precision'][index]
+        self.recall = model.cv_results_['mean_test_recall'][index]
+        self.f1 = model.cv_results_['mean_test_f1'][index]
+        self.accuracy = model.cv_results_['mean_test_accuracy'][index]
+

@@ -12,4 +12,4 @@ class PreprocessedDataLoader(Loader):
     def load(self):
         csv_path = self.csv_path
 
-        self.data = pandas.read_csv(csv_path, header=None, names=['sentiment', 'text'], skiprows=[0])
+        self.data = pandas.read_csv(csv_path)

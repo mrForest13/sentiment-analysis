@@ -8,9 +8,9 @@ import numpy as np
 def plot_vertical_bar(data, y_label='Dokładność'):
     bar_width = 0.25
 
-    arline = data['arline'].tolist()
-    review = data['review'].tolist()
-    amazon = data['amazon'].tolist()
+    arline = data['arline accuracy'].tolist()
+    review = data['review accuracy'].tolist()
+    amazon = data['amazon accuracy'].tolist()
 
     models = data['model'].tolist()
 
