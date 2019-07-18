@@ -1,5 +1,7 @@
 from preprocessing.Processor import Processor
 
+import swifter
+
 
 class TokenizeDataProcessor(Processor):
 
@@ -13,4 +15,4 @@ class TokenizeDataProcessor(Processor):
 
     @staticmethod
     def tokenize(data):
-        return data['text'].apply(lambda x: x.split())
+        return data['text'].swifter.apply(lambda x: x.split())

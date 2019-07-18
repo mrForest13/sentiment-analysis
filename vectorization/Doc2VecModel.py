@@ -18,7 +18,7 @@ class Doc2VecModel(Vectorizer):
         self.__init__(self.model.dm, self.model.vector_size, self.min_frequent)
 
     def model_name(self):
-        return "Doc2Vec {}".format('PV-DM' if self.model.dm == 1 else 'PV-DBOW')
+        return "D2V {}".format('PV-DM' if self.model.dm == 1 else 'PV-DBOW')
 
     def fit_transform(self, data):
         tagged_data = self.tagged_data(data)

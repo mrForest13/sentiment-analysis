@@ -1,8 +1,9 @@
 import os
+
+import lxml.etree as tree
 import pandas
 
 from loader.Loader import Loader
-import lxml.etree as tree
 
 
 class MultiDomainLoader(Loader):
@@ -28,7 +29,7 @@ class MultiDomainLoader(Loader):
         join_path = os.path.join(self.data_directory, category, directory)
 
         rows = []
-        with open(join_path) as file:
+        with open(join_path, errors='ignore') as file:
             root = tree.fromstringlist(["<root>", file.read(), "</root>"], parser=self.parser)
             for node in root:
                 review_node = node.find("review_text")

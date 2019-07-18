@@ -13,7 +13,7 @@ class BagOfWordsModel(Vectorizer):
         self.__init__(self.n, self.min_frequent)
 
     def model_name(self):
-        return "BoW {}-grams".format(self.n)
+        return "BoW {}-g".format(self.n)
 
     def fit_transform(self, data):
         filtered_voc = self.filter_not_frequent(data, self.n)

@@ -69,8 +69,8 @@ review_loader = IMDbLoader(DatasetsConfig.REVIEW, 'pos', 'neg')
 amazon_loader = MultiDomainLoader(DatasetsConfig.AMAZON, "positive.review", "negative.review")
 
 all_data = {
-    "arline": arline_loader,
-    "review": review_loader,
+    # "arline": arline_loader,
+    # "review": review_loader,
     "amazon": amazon_loader
 }
 

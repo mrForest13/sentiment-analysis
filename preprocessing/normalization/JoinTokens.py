@@ -1,5 +1,7 @@
 from preprocessing.Processor import Processor
 
+import swifter
+
 
 class JoinTokensProcessor(Processor):
 
@@ -13,4 +15,4 @@ class JoinTokensProcessor(Processor):
 
     @staticmethod
     def join(data):
-        return data['text'].apply(lambda x: " ".join(x))
+        return data['text'].swifter.apply(lambda x: " ".join(x))

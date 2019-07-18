@@ -24,9 +24,9 @@ def plot_vertical_bar(data, y_label='Dokładność'):
     plt.bar(r2, review, color=colors[1], width=bar_width, edgecolor='white', label='review')
     plt.bar(r3, amazon, color=colors[2], width=bar_width, edgecolor='white', label='amazon')
 
-    plt.xticks([r + bar_width for r in range(len(arline))], models, rotation=0)
+    plt.xticks([r + bar_width for r in range(len(arline))], models, fontsize=9, rotation=90)
 
-    plt.ylabel(y_label, fontsize=12)
+    plt.ylabel(y_label, fontsize=10)
     plt.legend(ncol=3)
     plt.ylim(top=1.15)
     plt.show()
