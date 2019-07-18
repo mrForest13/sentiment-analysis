@@ -83,8 +83,8 @@ uni_gram_td_idf = predict(TfIdfModel(n=1))
 bi_gram_td_idf = predict(TfIdfModel(n=2, min_frequent=1))
 tri_gram_td_idf = predict(TfIdfModel(n=3, min_frequent=1))
 
-# doc_2_vec_dm = predict(Doc2VecModel(dm=1))
-# doc_2_vec_dbow = predict(Doc2VecModel(dm=0))
+doc_2_vec_dm = predict(Doc2VecModel(dm=1))
+doc_2_vec_dbow = predict(Doc2VecModel(dm=0))
 
 frames = [
     uni_gram_bow,
@@ -93,8 +93,8 @@ frames = [
     uni_gram_td_idf,
     bi_gram_td_idf,
     tri_gram_td_idf,
-    # doc_2_vec_dm,
-    # doc_2_vec_dbow
+    doc_2_vec_dm,
+    doc_2_vec_dbow
 ]
 
 file_name = model.lower().replace(" ", "_")
