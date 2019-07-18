@@ -20,9 +20,9 @@ def plot_vertical_bar(data, y_label='Dokładność'):
 
     colors = sns.color_palette("deep")
 
-    plt.bar(r1, arline, color=colors[0], width=bar_width, edgecolor='white', label='arline')
-    plt.bar(r2, review, color=colors[1], width=bar_width, edgecolor='white', label='review')
-    plt.bar(r3, amazon, color=colors[2], width=bar_width, edgecolor='white', label='amazon')
+    plt.bar(r1, arline, color=colors[0], width=bar_width, edgecolor='white', label='linie lotnicze')
+    plt.bar(r2, review, color=colors[1], width=bar_width, edgecolor='white', label='recenzje (imdb)')
+    plt.bar(r3, amazon, color=colors[2], width=bar_width, edgecolor='white', label='recenzje (amazon)')
 
     plt.xticks([r + bar_width for r in range(len(arline))], models, fontsize=9, rotation=90)
 

@@ -51,7 +51,7 @@ def predict(vectorizer):
 
         print(len(loaded_data))
 
-        classification = Classification(folds=10, score='accuracy')
+        classification = Classification(folds=10, score='f1')
 
         train, test, train_labels, test_labels = split_data(loaded_data)
 
