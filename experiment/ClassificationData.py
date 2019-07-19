@@ -45,10 +45,13 @@ def predict(vectorizer):
 
         print("Data length: {}".format(len(loaded_data)))
 
+        print("Class number:")
+        print(loaded_data['sentiment'].value_counts())
+
         classification = Classification(folds=10, score='f1')
 
-        train = loaded_data['text']
-        train_labels = loaded_data['sentiment']
+        train = loaded_data.text
+        train_labels = loaded_data.sentiment
 
         train_data = vectorizer.fit_transform(train)
 
@@ -83,8 +86,8 @@ uni_gram_td_idf = predict(TfIdfModel(n=1))
 bi_gram_td_idf = predict(TfIdfModel(n=2, min_frequent=1))
 tri_gram_td_idf = predict(TfIdfModel(n=3, min_frequent=1))
 
-doc_2_vec_dm = predict(Doc2VecModel(dm=1))
-doc_2_vec_dbow = predict(Doc2VecModel(dm=0))
+doc_2_vec_dm = predict(Doc2VecModel(dm=1, size=300))
+doc_2_vec_dbow = predict(Doc2VecModel(dm=0, size=300))
 
 frames = [
     uni_gram_bow,

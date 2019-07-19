@@ -1,6 +1,6 @@
 from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
 from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import GridSearchCV, KFold
+from sklearn.model_selection import GridSearchCV, StratifiedShuffleSplit
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.naive_bayes import MultinomialNB
@@ -21,7 +21,7 @@ classifiers = {
 
 parameters = {
     'Naive Bayes': {
-        'alpha': [0.0001, 0.001, 0.01, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 10, 100, 1000],
+        'alpha': [0.0001, 0.001, 0.01, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 10],
     },
     'Logistic Regression': {
         'C': np.logspace(-3, 3, 7),
@@ -67,7 +67,7 @@ class Classification(object):
         self.jobs = jobs
 
     def fit(self, name, train, train_labels):
-        kf = KFold(n_splits=self.folds, shuffle=True)
+        kf = StratifiedShuffleSplit(n_splits=self.folds)
         clf = GridSearchCV(classifiers[name], parameters[name], cv=kf, scoring=scorers, n_jobs=self.jobs,
                            refit=self.score)
         start_time = time.time()
