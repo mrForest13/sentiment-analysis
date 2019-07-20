@@ -106,8 +106,7 @@ def predict(vectorizer):
         vectorizer.clean()
 
         print("Train time {} s".format(round(result.execution_time, 2)))
-        print("Finish processing for {} and {} ...".format(name, vectorizer.model_name()))
-        print()
+        print("Finish processing for {} and {} ... \n".format(name, vectorizer.model_name()))
 
     return pandas.DataFrame(data=result_dict, index=[0])
 
@@ -135,4 +134,7 @@ frames = [
 ]
 
 file_name = model.lower().replace(" ", "_")
-pandas.concat(frames).to_csv('results/{}.csv'.format(file_name), encoding='utf-8')
+final_frame = pandas.concat(frames)
+final_frame.to_csv('results/{}.csv'.format(file_name), encoding='utf-8')
+
+print("Final execution time for all models {} s\n".format(final_frame['execution_time'].sum()))
