@@ -14,4 +14,3 @@ class ArlineLoader(Loader):
 
         self.data = pandas.read_csv(csv_path, header=None, usecols=[1, 10], names=['sentiment', 'text'], skiprows=[0])
         self.data['text_length'] = [len(text) for text in self.data['text']]
-

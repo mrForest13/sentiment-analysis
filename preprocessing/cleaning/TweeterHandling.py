@@ -1,7 +1,6 @@
-from preprocessing.Processor import Processor
-
-import swifter
 import re
+
+from preprocessing.Processor import Processor
 
 
 class TweeterHandlingProcessor(Processor):

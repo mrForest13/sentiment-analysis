@@ -1,8 +1,7 @@
-from wordcloud import WordCloud
-
 import matplotlib.pyplot as plt
-import seaborn as sns
 import numpy as np
+import seaborn as sns
+from wordcloud import WordCloud
 
 
 def plot_vertical_bar(data, y_label='Dokładność'):

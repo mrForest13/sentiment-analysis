@@ -1,7 +1,5 @@
 from preprocessing.Processor import Processor
 
-import swifter
-
 
 class TokenizeDataProcessor(Processor):
 

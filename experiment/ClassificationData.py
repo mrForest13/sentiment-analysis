@@ -1,12 +1,58 @@
+import numpy
+import pandas
+
 from classification.Classification import Classification
 from loader.PreprocessedDataLoader import PreprocessedDataLoader
 from plot.Ploter import plot_pie, plot_box
-
 from vectorization.BagOfWordsModel import BagOfWordsModel
 from vectorization.Doc2VecModel import Doc2VecModel
 from vectorization.TdIdfModel import TfIdfModel
 
-import pandas
+arline_loader = PreprocessedDataLoader('processed/arline.csv')
+review_loader = PreprocessedDataLoader('processed/review.csv')
+amazon_loader = PreprocessedDataLoader('processed/amazon.csv')
+
+all_data = {
+    "arline": arline_loader,
+    "review": review_loader,
+    "amazon": amazon_loader
+}
+
+parameters = {
+    'Naive Bayes': {
+        'alpha': [0.0001, 0.001, 0.01, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 10],
+    },
+    'Logistic Regression': {
+        'C': numpy.logspace(-3, 3, 7),
+        'solver': ['lbfgs'],
+        'multi_class': ['auto'],
+        'max_iter': [10000]
+    },
+    'K Neighbors': {
+        'n_neighbors': list(range(1, 10)),
+        'weights': ['uniform', 'distance'],
+        'p': [1, 2]
+    },
+    'Decision Tree': {
+        'min_samples_split': range(10, 500, 20), 'max_depth': range(1, 20, 2)
+    },
+    'Random Forest': {
+        'min_samples_split': [3, 5, 10],
+        'n_estimators': [50, 100, 200, 300],
+        'max_depth': [3, 5, 15, 25],
+        'max_features': [3, 5, 10, 20]
+    },
+    'Ada Boost': {
+        'n_estimators': [50, 100, 200, 300],
+    },
+    'SVM': {
+        'C': [0.001, 0.01, 0.1, 1, 10],
+        "gamma": [0.001, 0.01, 0.1, 1],
+        'kernel': ['rbf', 'linear']
+    }
+}
+
+model = 'Naive Bayes'
 
 
 def load_data(data_loader, plot=False):
@@ -21,19 +67,6 @@ def load_data(data_loader, plot=False):
         plot_box(data)
 
     return data
-
-
-arline_loader = PreprocessedDataLoader('processed/arline.csv')
-review_loader = PreprocessedDataLoader('processed/review.csv')
-amazon_loader = PreprocessedDataLoader('processed/amazon.csv')
-
-all_data = {
-    "arline": arline_loader,
-    "review": review_loader,
-    "amazon": amazon_loader
-}
-
-model = 'Naive Bayes'
 
 
 def predict(vectorizer):
@@ -55,7 +88,7 @@ def predict(vectorizer):
 
         train_data = vectorizer.fit_transform(train)
 
-        result = classification.fit(model, train_data, train_labels)
+        result = classification.fit(model, train_data, train_labels, parameters)
 
         print("Finish processing for {} and {} ...".format(name, vectorizer.model_name()))
         print()

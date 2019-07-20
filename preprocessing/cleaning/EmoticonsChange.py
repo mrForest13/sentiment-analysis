@@ -1,8 +1,6 @@
 from preprocessing.Processor import Processor
 from preprocessing.emoticons import Emoticons
 
-import swifter
-
 
 class EmoticonsChangeProcessor(Processor):
 

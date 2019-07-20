@@ -1,5 +1,6 @@
-import os.path as path
 import glob
+import os.path as path
+
 import pandas
 
 from loader.Loader import Loader
@@ -29,4 +30,3 @@ class IMDbLoader(Loader):
                 rows.append([label, f.read()])
 
         return rows
-

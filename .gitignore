@@ -1,4 +1,6 @@
 .idea
 *.iml
 *.pyc
-processed
+dist
+build
+Sentiment_Analysis.egg-info

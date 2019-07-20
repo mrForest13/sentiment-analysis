@@ -1,7 +1,6 @@
-from preprocessing.Processor import Processor
-
-import swifter
 import html
+
+from preprocessing.Processor import Processor
 
 
 class HtmlEncodingProcessor(Processor):

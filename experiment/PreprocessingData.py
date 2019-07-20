@@ -1,22 +1,22 @@
 from configuration import DatasetsConfig
+from loader.AirlineLoader import ArlineLoader
 from loader.IMDbLoader import IMDbLoader
 from loader.MultiDomainLoader import MultiDomainLoader
+from plot.Ploter import *
 from preprocessing.ProcessChainBuilder import ProcessChainBuilder
 from preprocessing.cleaning.EmoticonsChange import EmoticonsChangeProcessor
-from preprocessing.cleaning.NegationHandling import NegationHandlingProcessor
-from preprocessing.cleaning.Punctuations import PunctuationsProcessor
-from preprocessing.normalization.StopWords import StopWordsProcessor
-from preprocessing.cleaning.TweeterHandling import TweeterHandlingProcessor
+from preprocessing.cleaning.FilterAscii import FilterAsciiProcessor
 from preprocessing.cleaning.FilterHtmlLink import FilterHtmlLinkProcessor
 from preprocessing.cleaning.FilterSpaces import FilterSpacesProcessor
 from preprocessing.cleaning.HtmlEncoding import HtmlEncodingProcessor
 from preprocessing.cleaning.LowercaseAll import LowercaseAllProcessor
-from preprocessing.cleaning.FilterAscii import FilterAsciiProcessor
+from preprocessing.cleaning.NegationHandling import NegationHandlingProcessor
+from preprocessing.cleaning.Punctuations import PunctuationsProcessor
+from preprocessing.cleaning.TweeterHandling import TweeterHandlingProcessor
 from preprocessing.normalization.DataLemmatization import DataLemmatizationProcessor
-from preprocessing.normalization.TokenizeData import TokenizeDataProcessor
 from preprocessing.normalization.JoinTokens import JoinTokensProcessor
-from loader.AirlineLoader import ArlineLoader
-from plot.Ploter import *
+from preprocessing.normalization.StopWords import StopWordsProcessor
+from preprocessing.normalization.TokenizeData import TokenizeDataProcessor
 
 
 def load_data(data_loader, plot=False):

@@ -1,4 +1,5 @@
 import abc
+
 import numpy
 from sklearn.feature_extraction.text import CountVectorizer
 
@@ -13,8 +14,9 @@ class Vectorizer(object):
     def clean(self):
         return
 
-    def name(self):
-        return "Tf-Idf"
+    @abc.abstractmethod
+    def model_name(self):
+        return
 
     @abc.abstractmethod
     def fit_transform(self, data):
@@ -43,10 +45,6 @@ class Vectorizer(object):
         print('Vocabulary after filter {}'.format(len(filtered_voc)))
 
         return dict(filtered_voc)
-
-    @abc.abstractmethod
-    def model_name(self):
-        return
 
     @staticmethod
     def sum_tokens(data, n):

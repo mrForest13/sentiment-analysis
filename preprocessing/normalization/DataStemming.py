@@ -1,5 +1,6 @@
-from preprocessing.Processor import Processor
 from nltk import PorterStemmer
+
+from preprocessing.Processor import Processor
 
 
 class DataStemmingProcessor(Processor):

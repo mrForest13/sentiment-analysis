@@ -20,4 +20,3 @@ class ProcessChainBuilder(object):
     def build(self):
         self.next_processor.next(Processor())
         return self.first_processor
-

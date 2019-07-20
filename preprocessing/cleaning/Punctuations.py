@@ -1,7 +1,6 @@
 from string import punctuation
-from preprocessing.Processor import Processor
 
-import swifter
+from preprocessing.Processor import Processor
 
 
 class PunctuationsProcessor(Processor):

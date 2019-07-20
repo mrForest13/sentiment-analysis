@@ -1,9 +1,8 @@
-import swifter
 import nltk
+from nltk import WordNetLemmatizer
+from nltk.corpus import wordnet
 
 from preprocessing.Processor import Processor
-from nltk.corpus import wordnet
-from nltk import WordNetLemmatizer
 
 
 class DataLemmatizationProcessor(Processor):

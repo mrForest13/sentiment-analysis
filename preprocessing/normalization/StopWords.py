@@ -1,9 +1,8 @@
+import pandas
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_selection import mutual_info_classif
-from preprocessing.Processor import Processor
 
-import pandas
-import swifter
+from preprocessing.Processor import Processor
 
 
 class StopWordsProcessor(Processor):
