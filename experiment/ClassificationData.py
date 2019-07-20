@@ -90,9 +90,6 @@ def predict(vectorizer):
 
         result = classification.fit(model, train_data, train_labels, parameters)
 
-        print("Finish processing for {} and {} ...".format(name, vectorizer.model_name()))
-        print()
-
         result_dict['model'] = vectorizer.model_name()
 
         result_dict["{} precision".format(name)] = result.precision
@@ -107,6 +104,10 @@ def predict(vectorizer):
         result_dict.update(params)
 
         vectorizer.clean()
+
+        print("Train time {} s".format(round(result.execution_time, 2)))
+        print("Finish processing for {} and {} ...".format(name, vectorizer.model_name()))
+        print()
 
     return pandas.DataFrame(data=result_dict, index=[0])
 
