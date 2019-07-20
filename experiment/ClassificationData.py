@@ -28,7 +28,7 @@ parameters = {
         'penalty': ['l1', 'l2']
     },
     'K Neighbors': {
-        'n_neighbors': list(range(1, 10)),
+        'n_neighbors': list(range(1, 15)),
         'weights': ['uniform', 'distance'],
         'p': [1, 2]
     },
