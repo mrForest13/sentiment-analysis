@@ -30,8 +30,9 @@ parameters = {
         'max_iter': [10000]
     },
     'K Neighbors': {
-        'n_neighbors': list(range(1, 6)),
+        'n_neighbors': list(range(1, 10)),
         'weights': ['uniform', 'distance'],
+        'p': [1, 2]
     },
     'Decision Tree': {
         'min_samples_split': range(10, 500, 20), 'max_depth': range(1, 20, 2)
