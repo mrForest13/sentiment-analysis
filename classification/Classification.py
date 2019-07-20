@@ -35,7 +35,7 @@ class Classification(object):
 
         kf = StratifiedShuffleSplit(n_splits=self.folds)
         clf = GridSearchCV(classifiers[name], parameters[name], cv=kf, scoring=self.scores, n_jobs=self.jobs,
-                           refit=self.score)
+                           refit=self.score, verbose=10)
         start_time = time.time()
         clf.fit(train, train_labels)
         self.fit_results[name] = clf

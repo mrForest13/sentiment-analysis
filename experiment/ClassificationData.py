@@ -25,7 +25,8 @@ parameters = {
     'Logistic Regression': {
         'C': numpy.logspace(-4, 4, 20),
         'solver': ['liblinear'],
-        'penalty': ['l1', 'l2']
+        'penalty': ['l1', 'l2'],
+        'max_iter': [10000]
     },
     'K Neighbors': {
         'n_neighbors': list(range(1, 15)),
@@ -51,7 +52,7 @@ parameters = {
     }
 }
 
-model = 'Naive Bayes'
+model = 'Logistic Regression'
 
 
 def load_data(data_loader, plot=False):
