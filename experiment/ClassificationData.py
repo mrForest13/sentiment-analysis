@@ -23,10 +23,9 @@ parameters = {
         'alpha': [0.0001, 0.001, 0.01, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 10],
     },
     'Logistic Regression': {
-        'C': numpy.logspace(-3, 3, 7),
-        'solver': ['lbfgs'],
-        'multi_class': ['auto'],
-        'max_iter': [10000]
+        'C': numpy.logspace(-4, 4, 20),
+        'solver': ['liblinear'],
+        'penalty': ['l1', 'l2']
     },
     'K Neighbors': {
         'n_neighbors': list(range(1, 10)),
@@ -34,20 +33,20 @@ parameters = {
         'p': [1, 2]
     },
     'Decision Tree': {
-        'min_samples_split': range(10, 500, 20), 'max_depth': range(1, 20, 2)
+        'min_samples_split': range(10, 500, 20),
+        'max_depth': range(1, 20, 2)
     },
     'Random Forest': {
-        'min_samples_split': [3, 5, 10],
-        'n_estimators': [50, 100, 200, 300],
-        'max_depth': [3, 5, 15, 25],
-        'max_features': [3, 5, 10, 20]
+        'n_estimators': list(range(10, 101, 10)),
+        'max_features': list(range(6, 32, 5)),
+        'min_samples_leaf': [1, 2, 4]
     },
     'Ada Boost': {
-        'n_estimators': [50, 100, 200, 300],
+        'n_estimators': list(range(10, 101, 10)),
     },
     'SVM': {
-        'C': [0.001, 0.01, 0.1, 1, 10],
-        "gamma": [0.001, 0.01, 0.1, 1],
+        'C': 10. ** numpy.arange(-3, 8),
+        "gamma": 10. ** numpy.arange(-5, 4),
         'kernel': ['rbf', 'linear']
     }
 }
