@@ -81,7 +81,7 @@ def predict(vectorizer):
         print("Class number:")
         print(loaded_data['sentiment'].value_counts())
 
-        classification = Classification(folds=10, score='f1')
+        classification = Classification(folds=5, score='f1')
 
         train = loaded_data.text
         train_labels = loaded_data.sentiment
