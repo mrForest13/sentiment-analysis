@@ -26,16 +26,16 @@ parameters = {
         'C': numpy.logspace(-4, 4, 20),
         'solver': ['liblinear'],
         'penalty': ['l1', 'l2'],
-        'max_iter': [10000]
+        'max_iter': [1000]
     },
     'K Neighbors': {
-        'n_neighbors': list(range(1, 15)),
+        'n_neighbors': list(range(1, 17, 2)),
         'weights': ['uniform', 'distance'],
         'p': [1, 2]
     },
     'Decision Tree': {
-        'min_samples_split': range(10, 500, 20),
-        'max_depth': range(1, 20, 2)
+        'min_samples_split': list(range(10, 500, 20)),
+        'max_depth': list(range(1, 20, 2))
     },
     'Random Forest': {
         'n_estimators': list(range(10, 101, 10)),
