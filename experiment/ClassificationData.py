@@ -108,7 +108,11 @@ def predict(vectorizer):
         print("Train time {} s".format(round(result.execution_time, 2)))
         print("Finish processing for {} and {} ... \n".format(name, vectorizer.model_name()))
 
-    return pandas.DataFrame(data=result_dict, index=[0])
+    file_name = model.lower().replace(" ", "_")
+    model_name = vectorizer.model_name().lower().replace(" ", "_").replace("-", "_")
+    result_frame = pandas.DataFrame(data=result_dict, index=[0])
+    result_frame.to_csv('results/{}_{}.csv'.format(file_name, model_name), encoding='utf-8')
+    return result_frame
 
 
 uni_gram_bow = predict(BagOfWordsModel(n=1))
@@ -122,19 +126,19 @@ tri_gram_td_idf = predict(TfIdfModel(n=3, min_frequent=1))
 doc_2_vec_dm = predict(Doc2VecModel(dm=1, size=300))
 doc_2_vec_dbow = predict(Doc2VecModel(dm=0, size=300))
 
-frames = [
-    uni_gram_bow,
-    bi_gram_bow,
-    tri_gram_bow,
-    uni_gram_td_idf,
-    bi_gram_td_idf,
-    tri_gram_td_idf,
-    doc_2_vec_dm,
-    doc_2_vec_dbow
-]
-
-file_name = model.lower().replace(" ", "_")
-final_frame = pandas.concat(frames)
-final_frame.to_csv('results/{}.csv'.format(file_name), encoding='utf-8')
-
-print("Final execution time for all models {} s\n".format(final_frame['execution_time'].sum()))
+# frames = [
+#     uni_gram_bow,
+#     bi_gram_bow,
+#     tri_gram_bow,
+#     uni_gram_td_idf,
+#     bi_gram_td_idf,
+#     tri_gram_td_idf,
+#     doc_2_vec_dm,
+#     doc_2_vec_dbow
+# ]
+#
+# file_name = model.lower().replace(" ", "_")
+# final_frame = pandas.concat(frames)
+# final_frame.to_csv('results/{}.csv'.format(file_name), encoding='utf-8')
+#
+# print("Final execution time for all models {} s\n".format(final_frame['execution_time'].sum()))
