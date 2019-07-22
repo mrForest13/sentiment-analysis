@@ -88,7 +88,7 @@ def predict(vectorizer):
 
         train_data = vectorizer.fit_transform(train)
 
-        print(train_data.shape)
+        print("Train size {}".format(train_data.shape))
 
         result = classification.fit(model, train_data, train_labels, parameters)
 
