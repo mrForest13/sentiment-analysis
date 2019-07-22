@@ -8,15 +8,17 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 
-classifiers = {
-    'Naive Bayes': MultinomialNB(),
-    'Logistic Regression': LogisticRegression(),
-    'K Neighbors': KNeighborsClassifier(),
-    'Decision Tree': DecisionTreeClassifier(),
-    'Random Forest': RandomForestClassifier(),
-    'Ada Boost': AdaBoostClassifier(),
-    'SVM': SVC(),
-}
+
+def model_by_name(name):
+    return {
+        'Naive Bayes': MultinomialNB(),
+        'Logistic Regression': LogisticRegression(),
+        'K Neighbors': KNeighborsClassifier(),
+        'Decision Tree': DecisionTreeClassifier(),
+        'Random Forest': RandomForestClassifier(),
+        'Ada Boost': AdaBoostClassifier(),
+        'SVM': SVC(),
+    }[name]
 
 
 class Classification(object):
@@ -24,7 +26,6 @@ class Classification(object):
     def __init__(self, folds=10, jobs=-1, score='f1'):
         self.scores = ['accuracy', 'precision', 'recall', 'f1']
         self.fit_results = {}
-        self.predict_results = {}
         self.score = score
         self.folds = folds
         self.jobs = jobs
@@ -34,7 +35,7 @@ class Classification(object):
             raise ValueError("Parameters cannot be empty!")
 
         kf = StratifiedShuffleSplit(n_splits=self.folds)
-        clf = GridSearchCV(classifiers[name], parameters[name], cv=kf, scoring=self.scores, n_jobs=self.jobs,
+        clf = GridSearchCV(model_by_name(name), parameters[name], cv=kf, scoring=self.scores, n_jobs=self.jobs,
                            refit=self.score, verbose=10)
         start_time = time.time()
         clf.fit(train, train_labels)
@@ -42,19 +43,8 @@ class Classification(object):
 
         return ClassificationResult(clf, time.time() - start_time)
 
-    def fit_all(self, train, train_labels, parameters=None):
-        if parameters is None:
-            raise ValueError("Parameters cannot be empty!")
-
-        for name in classifiers.keys():
-            self.fit(name, train, train_labels)
-
     def predict(self, name, test):
-        self.predict_results[name] = self.fit_results[name].predict(test)
-
-    def predict_all(self, test):
-        for name in classifiers.keys():
-            self.predict(name, test)
+        return self.fit_results[name].predict(test)
 
 
 class ClassificationResult(object):

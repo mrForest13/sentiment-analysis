@@ -10,8 +10,7 @@ class Doc2VecModel(Vectorizer):
     def __init__(self, dm=0, size=100, min_frequent=0):
         super().__init__(min_frequent)
         cores = multiprocessing.cpu_count()
-        self.model = Doc2Vec(dm=dm, vector_size=size, sample=0, window=5, min_count=1, workers=cores, alpha=0.025,
-                             min_alpha=0.0001, negative=5, epochs=15)
+        self.model = Doc2Vec(dm=dm, vector_size=size, sample=0, window=5, min_count=1, workers=cores, epochs=15)
 
     def clean(self):
         self.__init__(self.model.dm, self.model.vector_size, self.min_frequent)

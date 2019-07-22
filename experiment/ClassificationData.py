@@ -52,7 +52,7 @@ parameters = {
     }
 }
 
-model = 'Logistic Regression'
+model = 'Naive Bayes'
 
 
 def load_data(data_loader, plot=False):
@@ -87,6 +87,8 @@ def predict(vectorizer):
         train_labels = loaded_data.sentiment
 
         train_data = vectorizer.fit_transform(train)
+
+        print(train_data.shape)
 
         result = classification.fit(model, train_data, train_labels, parameters)
 
