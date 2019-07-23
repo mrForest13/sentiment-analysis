@@ -29,9 +29,7 @@ parameters = {
         'max_iter': [1000]
     },
     'K Neighbors': {
-        'n_neighbors': list(range(1, 17, 2)),
-        'weights': ['uniform', 'distance'],
-        'p': [1, 2]
+        'n_neighbors': list(range(1, 17, 2))
     },
     'Decision Tree': {
         'min_samples_split': list(range(10, 500, 20)),
@@ -43,7 +41,7 @@ parameters = {
         'min_samples_leaf': [1, 2, 4]
     },
     'Ada Boost': {
-        'n_estimators': list(range(10, 101, 10)),
+        'n_estimators': list(range(10, 151, 10)),
     },
     'SVM': {
         'C': 10. ** numpy.arange(-3, 8),
@@ -52,7 +50,7 @@ parameters = {
     }
 }
 
-model = 'K Neighbors'
+model = 'Ada Boost'
 
 
 def load_data(data_loader, plot=False):

@@ -2,7 +2,7 @@ import time
 
 from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
 from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import GridSearchCV, StratifiedShuffleSplit
+from sklearn.model_selection import GridSearchCV, KFold
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.svm import SVC
@@ -34,7 +34,7 @@ class Classification(object):
         if parameters is None:
             raise ValueError("Parameters cannot be empty!")
 
-        kf = StratifiedShuffleSplit(n_splits=self.folds)
+        kf = KFold(n_splits=self.folds)
         clf = GridSearchCV(model_by_name(name), parameters[name], cv=kf, scoring=self.scores, n_jobs=self.jobs,
                            refit=self.score, verbose=10)
         start_time = time.time()
