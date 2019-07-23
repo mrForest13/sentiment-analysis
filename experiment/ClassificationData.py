@@ -52,7 +52,7 @@ parameters = {
     }
 }
 
-model = 'Naive Bayes'
+model = 'K Neighbors'
 
 
 def load_data(data_loader, plot=False):
