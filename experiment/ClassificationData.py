@@ -20,37 +20,38 @@ all_data = {
 
 parameters = {
     'Naive Bayes': {
-        'alpha': [0.0001, 0.001, 0.01, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 10],
+        'alpha': [0.0001, 0.001, 0.01, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 10, 100, 1000],
     },
     'Logistic Regression': {
         'C': numpy.logspace(-4, 4, 20),
-        'solver': ['liblinear'],
-        'penalty': ['l1', 'l2'],
-        'max_iter': [1000]
+        'max_iter': [1000, 5000, 10000]
     },
     'K Neighbors': {
-        'n_neighbors': list(range(1, 17, 2))
-    },
-    'Decision Tree': {
-        'min_samples_split': list(range(10, 500, 20)),
-        'max_depth': list(range(1, 20, 2))
-    },
-    'Random Forest': {
-        'n_estimators': list(range(10, 101, 10)),
-        'max_features': list(range(6, 32, 5)),
-        'min_samples_leaf': [1, 2, 4]
+        'n_neighbors': list(range(1, 17, 2)),
+        'weights': ['uniform', 'distance']
     },
     'Ada Boost': {
-        'n_estimators': list(range(10, 151, 10)),
+        'n_estimators': [1, 2, 4, 8, 16, 32, 64, 100, 150, 200],
+    },
+    'Decision Tree': {
+        'max_depth': list(range(1, 20, 2)),
+        'min_samples_split': numpy.linspace(0.1, 1.0, 10),
+        'min_samples_leaf': numpy.linspace(0.1, 0.5, 5)
+    },
+    'Random Forest': {
+        'n_estimators': [1, 2, 4, 8, 16, 32, 64, 100, 150, 200],
+        'max_depth': list(range(1, 20, 2)),
+        'min_samples_split': numpy.linspace(0.1, 1.0, 10),
+        'min_samples_leaf': numpy.linspace(0.1, 0.5, 5)
     },
     'SVM': {
-        'C': 10. ** numpy.arange(-3, 8),
-        "gamma": 10. ** numpy.arange(-5, 4),
-        'kernel': ['rbf', 'linear']
+        'C': [0.001, 0.01, 0.1, 1, 10],
+        "gamma": [0.001, 0.01, 0.1, 1],
+        'kernel': ['rbf', 'linear', 'poly']
     }
 }
 
-model = 'Ada Boost'
+model = 'Random Forest'
 
 
 def load_data(data_loader, plot=False):
