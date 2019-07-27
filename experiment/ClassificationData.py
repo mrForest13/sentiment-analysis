@@ -20,33 +20,36 @@ all_data = {
 
 parameters = {
     'Naive Bayes': {
-        'alpha': [0.0001, 0.001, 0.01, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 10],
+        'alpha': [0.0001, 0.001, 0.01, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 10, 1000, 10000],
     },
     'Logistic Regression': {
         'C': numpy.logspace(-4, 4, 20),
-        'solver': ['liblinear'],
-        'penalty': ['l1', 'l2'],
-        'max_iter': [1000]
+        'max_iter': [2000, 5000, 10000]
     },
     'K Neighbors': {
-        'n_neighbors': list(range(1, 17, 2))
+        'n_neighbors': list(range(1, 17, 2)),
+        'weights': ['uniform', 'distance']
     },
     'Decision Tree': {
-        'min_samples_split': list(range(10, 500, 20)),
-        'max_depth': list(range(1, 20, 2))
+        'max_depth': list(range(1, 20, 2)),
+        'min_samples_split': numpy.linspace(0.1, 1.0, 10),
+        'min_samples_leaf': numpy.linspace(0.1, 0.5, 5),
+        'max_features': [None, 'sqrt', 'log2']
     },
     'Random Forest': {
-        'n_estimators': list(range(10, 101, 10)),
-        'max_features': list(range(6, 32, 5)),
-        'min_samples_leaf': [1, 2, 4]
+        'n_estimators': [1, 2, 4, 8, 16, 32, 64, 100, 200],
+        'max_depth': list(range(1, 20, 2)),
+        'min_samples_split': numpy.linspace(0.1, 1.0, 10),
+        'min_samples_leaf': numpy.linspace(0.1, 0.5, 5),
+        'max_features': [None, 'sqrt', 'log2']
     },
     'Ada Boost': {
         'n_estimators': list(range(10, 151, 10)),
     },
     'SVM': {
-        'C': 10. ** numpy.arange(-3, 8),
-        "gamma": 10. ** numpy.arange(-5, 4),
-        'kernel': ['rbf', 'linear']
+        'C': [0.001, 0.01, 0.1, 1, 10],
+        "gamma": [0.001, 0.01, 0.1, 1],
+        'kernel': ['rbf', 'linear', 'poly']
     }
 }
 
@@ -108,11 +111,7 @@ def predict(vectorizer):
         print("Train time {} s".format(round(result.execution_time, 2)))
         print("Finish processing for {} and {} ... \n".format(name, vectorizer.model_name()))
 
-    file_name = model.lower().replace(" ", "_")
-    model_name = vectorizer.model_name().lower().replace(" ", "_").replace("-", "_")
-    result_frame = pandas.DataFrame(data=result_dict, index=[0])
-    result_frame.to_csv('results/{}_{}.csv'.format(file_name, model_name), encoding='utf-8')
-    return result_frame
+    return pandas.DataFrame(data=result_dict, index=[0])
 
 
 uni_gram_bow = predict(BagOfWordsModel(n=1))
@@ -126,19 +125,19 @@ tri_gram_td_idf = predict(TfIdfModel(n=3, min_frequent=1))
 doc_2_vec_dm = predict(Doc2VecModel(dm=1, size=300))
 doc_2_vec_dbow = predict(Doc2VecModel(dm=0, size=300))
 
-# frames = [
-#     uni_gram_bow,
-#     bi_gram_bow,
-#     tri_gram_bow,
-#     uni_gram_td_idf,
-#     bi_gram_td_idf,
-#     tri_gram_td_idf,
-#     doc_2_vec_dm,
-#     doc_2_vec_dbow
-# ]
-#
-# file_name = model.lower().replace(" ", "_")
-# final_frame = pandas.concat(frames)
-# final_frame.to_csv('results/{}.csv'.format(file_name), encoding='utf-8')
-#
-# print("Final execution time for all models {} s\n".format(final_frame['execution_time'].sum()))
+frames = [
+    uni_gram_bow,
+    bi_gram_bow,
+    tri_gram_bow,
+    uni_gram_td_idf,
+    bi_gram_td_idf,
+    tri_gram_td_idf,
+    doc_2_vec_dm,
+    doc_2_vec_dbow
+]
+
+file_name = model.lower().replace(" ", "_")
+final_frame = pandas.concat(frames)
+final_frame.to_csv('results/{}.csv'.format(file_name), encoding='utf-8')
+
+print("Final execution time for all models {} s\n".format(final_frame['execution_time'].sum()))
