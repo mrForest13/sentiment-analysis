@@ -53,7 +53,7 @@ parameters = {
     }
 }
 
-model = 'Ada Boost'
+model = 'Random Forest'
 
 
 def load_data(data_loader, plot=False):
