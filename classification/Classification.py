@@ -23,9 +23,10 @@ def model_by_name(name):
 
 class Classification(object):
 
-    def __init__(self, folds=10, jobs=-1, score='f1'):
+    def __init__(self, folds=10, jobs=-1, score='f1', verbose=10):
         self.scores = ['accuracy', 'precision', 'recall', 'f1']
         self.fit_results = {}
+        self.verbose = verbose
         self.score = score
         self.folds = folds
         self.jobs = jobs
@@ -36,7 +37,7 @@ class Classification(object):
 
         kf = KFold(n_splits=self.folds)
         clf = GridSearchCV(model_by_name(name), parameters[name], cv=kf, scoring=self.scores, n_jobs=self.jobs,
-                           refit=self.score, verbose=10)
+                           refit=self.score, verbose=self.verbose)
         start_time = time.time()
         clf.fit(train, train_labels)
         self.fit_results[name] = clf
@@ -57,4 +58,3 @@ class ClassificationResult(object):
         self.recall = model.cv_results_['mean_test_recall'][index]
         self.f1 = model.cv_results_['mean_test_f1'][index]
         self.accuracy = model.cv_results_['mean_test_accuracy'][index]
-

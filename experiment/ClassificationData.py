@@ -31,14 +31,14 @@ parameters = {
         'weights': ['uniform', 'distance']
     },
     'Decision Tree': {
-        'max_depth': list(range(1, 20, 2)),
+        'max_depth': list(range(15, 30, 2)),
         'min_samples_split': numpy.linspace(0.1, 1.0, 10),
         'min_samples_leaf': numpy.linspace(0.1, 0.5, 5),
         'max_features': [None, 'sqrt', 'log2']
     },
     'Random Forest': {
-        'n_estimators': [1, 2, 4, 8, 16, 32, 64, 100, 200],
-        'max_depth': list(range(1, 20, 2)),
+        'n_estimators': [50, 150, 300],
+        'max_depth': list(range(15, 30, 2)),
         'min_samples_split': numpy.linspace(0.1, 1.0, 10),
         'min_samples_leaf': numpy.linspace(0.1, 0.5, 5),
         'max_features': [None, 'sqrt', 'log2']
@@ -49,11 +49,11 @@ parameters = {
     'SVM': {
         'C': [0.001, 0.01, 0.1, 1, 10],
         "gamma": [0.001, 0.01, 0.1, 1],
-        'kernel': ['rbf', 'linear', 'poly']
+        'kernel': ['rbf', 'linear']
     }
 }
 
-model = 'Random Forest'
+model = 'Naive Bayes'
 
 
 def load_data(data_loader, plot=False):
