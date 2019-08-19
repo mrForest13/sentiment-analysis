@@ -1,4 +1,4 @@
-from configuration import DatasetsConfig
+from experiment.configuration import DatasetsConfig
 from loader.AirlineLoader import ArlineLoader
 from loader.IMDbLoader import IMDbLoader
 from loader.MultiDomainLoader import MultiDomainLoader
